@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Detail User - SIPUSTAKA{% endblock %}
+
+{% block content %}
+<div class="flex items-center gap-3 mb-5">
+  <a href="{% url 'siswa_list' %}" class="w-8 h-8 bg-white rounded-full border border-slate-200 shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50 transition">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+    </svg>
+  </a>
+  <div>
+    <p class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">Kelola User</p>
+    <h3 class="text-lg font-bold text-slate-800 leading-tight">Detail User</h3>
+  </div>
+</div>
+
+<div class="max-w-[580px] bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgb(0,0,0,0.015)] border border-slate-100 space-y-4">
+  
+  <div class="grid grid-cols-2 gap-3">
+    
+    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100/80">
+      <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">ID</p>
+      <p class="text-sm font-bold text-slate-800 mt-0.5">{{ siswa.id }}</p>
+    </div>
+
+    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100/80">
+      <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Nama</p>
+      <p class="text-sm font-bold text-slate-800 mt-0.5">{{ siswa.nama }}</p>
+    </div>
+
+    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100/80">
+      <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Kelas</p>
+      <p class="text-sm font-bold text-slate-800 mt-0.5">{{ siswa.kelas }}</p>
+    </div>
+
+    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100/80">
+      <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">NIS</p>
+      <p class="text-sm font-bold text-slate-800 font-mono mt-0.5">{{ siswa.nis }}</p>
+    </div>
+
+    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100/80 flex flex-col justify-between">
+      <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Status</p>
+      <div>
+        {% if siswa.is_active or siswa.status == 'aktif' or siswa.status == 'Aktif' %}
+          <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-100">
+            Aktif
+          </span>
+        {% else %}
+          <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 text-slate-500 border border-slate-200">
+            Tidak Aktif
+          </span>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100/80">
+      <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Total Peminjaman</p>
+      <p class="text-sm font-bold text-slate-800 mt-0.5">{{ total_peminjaman|default:"0" }}</p>
+    </div>
+
+  </div>
+
+  <div class="bg-slate-50 rounded-xl p-4 border border-slate-100/80">
+    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Peminjaman Aktif</p>
+    <div class="mt-1 text-xs text-slate-600 font-medium">
+      {% if peminjaman_aktif_count > 0 %}
+        <p class="text-slate-700 flex items-center gap-1.5">
+          {{ peminjaman_aktif_count }} buku masih dipinjam.
+        </p>
+      {% else %}
+        <p class="text-slate-500 flex items-center gap-1.5">
+          Tidak ada tanggungan peminjaman buku saat ini.
+        </p>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

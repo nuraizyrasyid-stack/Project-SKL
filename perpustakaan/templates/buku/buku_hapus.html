@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Hapus Buku - SIPUSTAKA{% endblock %}
+
+{% block content %}
+
+<div class="w-full max-w-xl flex items-center gap-3 mb-4 ml-4 md:ml-6">
+    <a href="{% url 'buku_list' %}" class="text-slate-500 hover:text-slate-700 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+    </a>
+    <div>
+        <p class="text-[10px] text-slate-400 font-bold tracking-wider">Kelola Buku</p>
+        <h1 class="text-xl font-bold text-slate-900 leading-tight">Hapus Buku</h1>
+    </div>
+</div>
+
+<div class="w-full max-w-xl bg-white rounded-2xl border border-slate-100 shadow-[0_4px_25px_rgb(0,0,0,0.01)] p-6 ml-4 md:ml-6 space-y-6">
+    <div>
+        <p class="text-xs text-slate-600 mb-1">Anda akan menghapus:</p>
+        <h2 class="text-base font-bold text-slate-900 mb-2">{{ buku.judul }}</h2>
+        <p class="text-[10px] text-slate-400">Data peminjaman yang menggunakan buku ini tidak akan otomatis dihapus.</p>
+    </div>
+
+    <form method="POST" action="{% url 'buku_hapus' buku.id %}" class="flex justify-end gap-3 pt-4 border-t border-slate-50">
+        {% csrf_token %}
+        
+        <a href="{% url 'buku_list' %}"
+            class="px-5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 transition shadow-sm flex items-center">
+            Batal
+        </a>
+        
+        <button type="submit"
+            class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition shadow-sm flex items-center">
+            Hapus
+        </button>
+
+    </form>
+</div>
+
+{% endblock %}

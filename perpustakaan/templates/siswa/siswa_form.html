@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if siswa %}Edit User - SIPUSTAKA{% else %}Tambah User - SIPUSTAKA{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+  <a href="{% url 'siswa_list' %}"
+    class="text-[#2563eb] text-sm font-semibold flex items-center gap-1 hover:underline mb-2">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+    </svg>
+    Kembali ke Daftar
+  </a>
+  <h3 class="text-2xl font-bold text-slate-900">
+    {% if siswa %}Edit Data User{% else %}Tambah User Baru{% endif %}
+  </h3>
+</div>
+
+<div class="max-w-2xl rounded-2xl bg-white p-8 shadow-sm border border-slate-200/60">
+  <form method="POST" class="space-y-5">
+    {% csrf_token %}
+
+    <div class="space-y-1.5">
+      <label for="nama" class="text-xs font-bold text-slate-500 uppercase tracking-wider">Nama Lengkap</label>
+      <input type="text" name="nama" id="nama" required placeholder="Contoh: Roni Pratama"
+        value="{{ siswa.nama|default:'' }}"
+        class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-[#3b82f6] focus:ring-4 focus:ring-blue-100 transition outline-none">
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div class="space-y-1.5">
+        <label for="kelas" class="text-xs font-bold text-slate-500 uppercase tracking-wider">Kelas</label>
+        <input type="text" name="kelas" id="kelas" required placeholder="XI IPA 1" value="{{ siswa.kelas|default:'' }}"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-[#3b82f6] focus:ring-4 focus:ring-blue-100 transition outline-none">
+      </div>
+
+      <div class="space-y-1.5">
+        <label for="nis" class="text-xs font-bold text-slate-500 uppercase tracking-wider">NIS</label>
+        <input type="text" name="nis" id="nis" required placeholder="2026001" value="{{ siswa.nis|default:'' }}"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-mono focus:border-[#3b82f6] focus:ring-4 focus:ring-blue-100 transition outline-none">
+      </div>
+    </div>
+
+    <div class="pt-4 flex items-center gap-3">
+      <button type="submit"
+        class="rounded-xl bg-[#2563eb] text-white px-6 py-3 text-sm font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-500/20 flex-1 sm:flex-none">
+        Simpan Data User
+      </button>
+      <a href="{% url 'siswa_list' %}"
+        class="rounded-xl bg-slate-100 text-slate-600 px-6 py-3 text-sm font-bold hover:bg-slate-200 transition flex-1 sm:flex-none text-center">
+        Batal
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}

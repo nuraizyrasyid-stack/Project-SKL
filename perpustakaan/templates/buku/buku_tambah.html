@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block title %}Tambah Buku - SIPUSTAKA{% endblock %}
+
+{% block content %}
+
+<div class="flex items-center gap-2 mb-3">
+    <a href="{% url 'buku_list' %}" class="text-slate-500 hover:text-slate-700 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+    </a>
+
+    <div>
+        <p class="text-[10px] text-slate-400">
+            Kelola Buku
+        </p>
+
+        <h1 class="text-lg font-bold text-slate-900">
+            Tambah Buku
+        </h1>
+    </div>
+</div>
+
+<div class="w-full max-w-[500px] bg-white rounded-xl border border-slate-100 shadow-sm p-3">
+
+    <form method="POST" action="{% url 'buku_tambah' %}" class="space-y-3">
+        {% csrf_token %}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+            <div>
+                <label class="block text-[11px] font-semibold text-slate-500 mb-1">
+                    Judul Buku
+                </label>
+
+                <input type="text" name="judul" required placeholder="Judul buku"
+                    class="w-full h-8 rounded-lg border border-slate-200 px-3 text-xs bg-[#fafafa] focus:border-blue-500 focus:ring-2 focus:ring-blue-50 outline-none">
+            </div>
+
+            <div>
+                <label class="block text-[11px] font-semibold text-slate-500 mb-1">
+                    Pengarang
+                </label>
+
+                <input type="text" name="pengarang" required placeholder="Nama pengarang"
+                    class="w-full h-8 rounded-lg border border-slate-200 px-3 text-xs bg-[#fafafa] focus:border-blue-500 focus:ring-2 focus:ring-blue-50 outline-none">
+            </div>
+
+            <div>
+                <label class="block text-[11px] font-semibold text-slate-500 mb-1">
+                    Kategori
+                </label>
+
+                <select name="kategori" required
+                    class="w-full h-8 rounded-lg border border-slate-200 px-3 text-xs bg-[#fafafa] focus:border-blue-500 focus:ring-2 focus:ring-blue-50 outline-none">
+
+                    <option value="">Pilih Kategori</option>
+                    <option value="Novel">Novel</option>
+                    <option value="Sains">Sains</option>
+                    <option value="Sejarah">Sejarah</option>
+                    <option value="Biografi">Biografi</option>
+                    <option value="Komik">Komik</option>
+
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-[11px] font-semibold text-slate-500 mb-1">
+                    Penerbit
+                </label>
+
+                <input type="text" name="penerbit" required placeholder="Nama penerbit"
+                    class="w-full h-8 rounded-lg border border-slate-200 px-3 text-xs bg-[#fafafa] focus:border-blue-500 focus:ring-2 focus:ring-blue-50 outline-none">
+            </div>
+
+            <div>
+                <label class="block text-[11px] font-semibold text-slate-500 mb-1">
+                    Tahun
+                </label>
+
+                <input type="number" name="tahun" required placeholder="2025"
+                    class="w-full h-8 rounded-lg border border-slate-200 px-3 text-xs bg-[#fafafa] focus:border-blue-500 focus:ring-2 focus:ring-blue-50 outline-none">
+            </div>
+
+            <div>
+                <label class="block text-[11px] font-semibold text-slate-500 mb-1">
+                    ISBN
+                </label>
+
+                <input type="text" name="isbn" required placeholder="Nomor ISBN"
+                    class="w-full h-8 rounded-lg border border-slate-200 px-3 text-xs bg-[#fafafa] focus:border-blue-500 focus:ring-2 focus:ring-blue-50 outline-none">
+            </div>
+
+            <div>
+                <label class="block text-[11px] font-semibold text-slate-500 mb-1">
+                    Stok
+                </label>
+
+                <input type="number" name="stok" required placeholder="0"
+                    class="w-full h-8 rounded-lg border border-slate-200 px-3 text-xs bg-[#fafafa] focus:border-blue-500 focus:ring-2 focus:ring-blue-50 outline-none">
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="block text-[11px] font-semibold text-slate-500 mb-1">
+                    Lokasi Rak
+                </label>
+
+                <input type="text" name="rak" required placeholder="Rak A-01"
+                    class="w-full h-8 rounded-lg border border-slate-200 px-3 text-xs bg-[#fafafa] focus:border-blue-500 focus:ring-2 focus:ring-blue-50 outline-none">
+            </div>
+
+        </div>
+
+        <div>
+            <label class="block text-[11px] font-semibold text-slate-500 mb-1">
+                Deskripsi
+            </label>
+
+            <textarea name="deskripsi" rows="2" placeholder="Deskripsi singkat buku..."
+                class="w-full rounded-lg border border-slate-200 px-3 py-2 text-xs bg-[#fafafa] resize-none focus:border-blue-500 focus:ring-2 focus:ring-blue-50 outline-none"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-1">
+
+            <a href="{% url 'buku_list' %}"
+                class="h-8 px-3 border border-slate-200 rounded-lg text-xs text-slate-600 hover:bg-slate-50 flex items-center">
+                Batal
+            </a>
+
+            <button type="submit"
+                class="h-8 px-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium transition">
+                Simpan
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
