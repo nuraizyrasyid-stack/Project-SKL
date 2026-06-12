@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="flex items-center gap-2 mb-3">
+<div class="flex items-center gap-2 mb-3 max-w-[500px] mx-auto">
     <a href="{% url 'buku_list' %}" class="text-slate-500 hover:text-slate-700 transition">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<div class="w-full max-w-[500px] bg-white rounded-xl border border-slate-100 shadow-sm p-3">
+<div class="w-full max-w-[500px] bg-white rounded-xl border border-slate-100 shadow-sm p-3 mx-auto">
 
     <form method="POST" action="{% url 'buku_tambah' %}" class="space-y-3">
         {% csrf_token %}
@@ -60,7 +60,11 @@
                     <option value="Sains">Sains</option>
                     <option value="Sejarah">Sejarah</option>
                     <option value="Biografi">Biografi</option>
-                    <option value="Komik">Komik</option>
+                    <option value="Komik">Sirah</option>
+                    <option value="Komik">Fiqih</option>
+                    <option value="Komik">Hadist</option>
+                    <option value="Komik">Coding</option>
+                    
 
                 </select>
             </div>
@@ -139,4 +143,4 @@
 
 </div>
 
-{% endblock %}
+{% endblock %}  

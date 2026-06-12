@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet" />
 
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -34,6 +35,7 @@
             },
         };
     </script>
+
     <style>
         body {
             font-family: Inter, sans-serif;
@@ -50,10 +52,14 @@
     </style>
 </head>
 
-<body class="bg-[#f8fafc] text-slate-900 h-screen overflow-hidden">
-    <div class="h-screen flex flex-col md:flex-row">
+<body class="bg-[#f8fafc] text-slate-900">
 
-        <aside class="w-full md:w-52 h-screen bg-[#090d16] text-slate-100 flex-none flex flex-col justify-between">
+    <div class="min-h-screen flex flex-col md:flex-row">
+
+        
+        <aside class="w-full md:w-52 bg-[#090d16] text-slate-100 flex flex-col">
+
+           
             <div>
                 <div class="px-4 py-5 border-b border-slate-900">
                     <div class="flex items-center gap-2">
@@ -61,15 +67,21 @@
                             class="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-500 to-sky-400 flex items-center justify-center shadow-lg shadow-brand-500/20">
                             <span class="text-sm font-bold text-white">P</span>
                         </div>
+
                         <div>
                             <p class="text-[8px] font-bold text-slate-500 uppercase tracking-[0.1em] leading-none">
-                                SIPUSTAKA</p>
-                            <h1 class="text-[11px] font-bold text-white mt-0.5 leading-tight">Sistem Buku</h1>
+                                SIPUSTAKA
+                            </p>
+
+                            <h1 class="text-[11px] font-bold text-white mt-0.5 leading-tight">
+                                Sistem Buku
+                            </h1>
                         </div>
                     </div>
                 </div>
 
                 <nav class="px-2.5 py-5 space-y-1">
+
                     <a href="{% url 'index' %}"
                         class="w-full rounded-xl px-3.5 py-2.5 flex items-center gap-2.5 transition text-[12px] font-semibold {% if request.path == '/' %}text-white bg-[#131926]{% else %}text-slate-400 hover:text-white hover:bg-[#131926]/50{% endif %}">
                         <span class="material-icons-outlined text-base">grid_view</span>
@@ -93,23 +105,33 @@
                         <span class="material-icons-outlined text-base">people_alt</span>
                         User
                     </a>
+
                 </nav>
             </div>
 
-            <div class="px-3.5 pb-5">
+          
+            <div class="mt-auto px-3.5 pb-5">
                 <div class="rounded-xl bg-[#131926] p-2.5 border border-slate-900">
-                    <p class="text-[8px] font-bold text-slate-500 uppercase tracking-wider">Admin Aktif</p>
-                    <p class="mt-0.5 text-[11px] font-bold text-white tracking-wide leading-tight">Budi Siregar</p>
+                    <p class="text-[8px] font-bold text-slate-500 uppercase tracking-wider">
+                        Admin Aktif
+                    </p>
+
+                    <p class="mt-0.5 text-[11px] font-bold text-white tracking-wide leading-tight">
+                        Budi Siregar
+                    </p>
                 </div>
             </div>
+
         </aside>
 
-        <main class="flex-1 overflow-y-auto p-7 no-scrollbar">
+       
+        <main class="flex-1 p-7">
             {% block content %}
             {% endblock %}
         </main>
 
     </div>
+
 </body>
 
 </html>

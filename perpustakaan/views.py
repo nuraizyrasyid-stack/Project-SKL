@@ -78,9 +78,9 @@ def buku_tambah(request):
         with connection.cursor() as cursor:
            
             cursor.execute("""
-                INSERT INTO buku (judul, pengarang, kategori, penerbit, tahun_terbit, rak, stok, deskripsi)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """, [judul, pengarang, kategori, penerbit, tahun, rak, stok, deskripsi])
+                INSERT INTO buku (judul, pengarang, kategori, penerbit, tahun_terbit, rak, stok, deskripsi, isbn)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, [judul, pengarang, kategori, penerbit, tahun, rak, stok, deskripsi, isbn])
             
         return redirect('buku_list')
         
@@ -113,14 +113,15 @@ def buku_edit(request, pk):
         rak = request.POST.get('rak')
         stok = request.POST.get('stok')
         deskripsi = request.POST.get('deskripsi')
+        isbn = request.POST.get('isbn')
 
         with connection.cursor() as cursor:
             cursor.execute("""
                 UPDATE buku SET 
                     judul = %s, pengarang = %s, kategori = %s, penerbit = %s,
-                    tahun_terbit = %s, rak = %s, stok = %s, deskripsi = %s
+                    tahun_terbit = %s, rak = %s, stok = %s, deskripsi = %s,  isbn = %s
                 WHERE id = %s
-            """, [judul, pengarang, kategori, penerbit, tahun_terbit, rak, stok, deskripsi, pk])
+            """, [judul, pengarang, kategori, penerbit, tahun_terbit, rak, stok, deskripsi, isbn, pk])
         return redirect('buku_list')
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM buku WHERE id = %s", [pk])

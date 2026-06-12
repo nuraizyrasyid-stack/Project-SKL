@@ -4,8 +4,7 @@
 
 {% block content %}
 
-<div class="flex items-center justify-between mb-5">
-
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5">
   <div>
     <p class="text-[12px] text-slate-500">
       Kelola data buku SIPUSTAKA.
@@ -17,7 +16,7 @@
   </div>
 
   <a href="{% url 'buku_tambah' %}"
-    class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-2xl text-[13px] font-semibold shadow-md shadow-blue-500/20 transition">
+    class="inline-flex items-center gap-2 self-start bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-2xl text-[13px] font-semibold shadow-md shadow-blue-500/20 transition">
 
     <span class="material-icons-outlined text-[18px]">
       add
@@ -28,9 +27,9 @@
 
 </div>
 
-<div class="bg-white rounded-[24px] border border-slate-100 shadow-sm overflow-hidden">
+<div class="bg-white rounded-[24px] border border-slate-100 shadow-sm overflow-x-auto">
 
-  <table class="w-full">
+  <table class="w-full min-w-[900px]">
 
     <thead>
       <tr class="border-b border-slate-100 text-[12px] text-slate-500 font-semibold">
@@ -47,6 +46,10 @@
 
         <th class="px-5 py-5 text-left">
           Kategori
+        </th>
+
+        <th class="px-5 py-5 text-left">
+          ISBN
         </th>
 
         <th class="px-5 py-5 text-left">
@@ -93,6 +96,10 @@
           {{ buku.kategori }}
         </td>
 
+        <td class="px-5 py-5 text-[13px] text-slate-700 font-medium">
+          {{ buku.isbn|default:"-" }}
+        </td>
+
         <td class="px-5 py-5 text-[13px] text-slate-700">
           {{ buku.penerbit }}
         </td>
@@ -137,7 +144,7 @@
       {% empty %}
 
       <tr>
-        <td colspan="9" class="py-10 text-center text-slate-400">
+        <td colspan="10" class="py-10 text-center text-slate-400">
           Belum ada data buku.
         </td>
       </tr>
