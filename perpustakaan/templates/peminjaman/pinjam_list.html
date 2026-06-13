@@ -51,35 +51,36 @@
         {% for pinjam in list_peminjaman %}
         <tr class="hover:bg-slate-50/50 transition">
           <td class="px-6 py-4 text-slate-400 font-extrabold">
-            {{ pinjam.id|default:pinjam.0 }}
+            {{ pinjam.id }}
           </td>
 
           <td class="px-6 py-4 text-slate-900 font-extrabold">
-            {{ pinjam.nama_siswa|default:pinjam.1 }}
+            {{ pinjam.nama_siswa }}
           </td>
 
           <td class="px-6 py-4 text-slate-800">
-            {{ pinjam.judul_buku|default:pinjam.2 }}
+            {{ pinjam.judul_buku }}
           </td>
 
           <td class="px-6 py-4 text-slate-800">
-            {{ pinjam.tanggal_pinjam|default:pinjam.3 }}
+            {{ pinjam.tanggal_pinjam }}
           </td>
 
           <td class="px-6 py-4 text-slate-800">
-            {{ pinjam.tanggal_kembali|default:pinjam.4 }}
+            {{ pinjam.tanggal_kembali }}
           </td>
 
           <td class="px-6 py-4 text-slate-800 max-w-[200px] break-words">
-            {{ pinjam.keperluan|default:pinjam.5 }}
+            {{ pinjam.keperluan }}
           </td>
 
           <td class="px-6 py-4 text-slate-900">
-            {{ pinjam.nama_petugas|default:pinjam.6 }}
+            {{ pinjam.nama_petugas }}
           </td>
 
           <td class="px-6 py-4">
-            {% if pinjam.status_kembali or pinjam.7 == 1 or pinjam.7 == True %}
+            {# Perbaikan Logika Status: mengecek jika statusnya bernilai 1 atau teks Selesai #}
+            {% if pinjam.status_kembali == 1 or pinjam.status_kembali == 'Selesai' %}
             <span
               class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-emerald-50 text-emerald-600 border border-emerald-100">
               Selesai
@@ -93,8 +94,9 @@
           </td>
 
           <td class="px-6 py-4 text-center">
-            {% if not pinjam.status_kembali and pinjam.7 != 1 and pinjam.7 != True %}
-            <a href="{% url 'peminjaman_kembalikan' pinjam.id|default:pinjam.0 %}"
+            {# Perbaikan Logika Tombol Aksi: jika bernilai 0 atau teks Dipinjam #}
+            {% if pinjam.status_kembali == 0 or pinjam.status_kembali == 'Dipinjam' %}
+            <a href="{% url 'peminjaman_kembalikan' pinjam.id %}"
               class="inline-flex items-center justify-center bg-[#059669] hover:bg-emerald-700 text-white text-[11px] font-extrabold px-3 py-1.5 rounded-lg transition shadow-sm">
               Kembalikan
             </a>
