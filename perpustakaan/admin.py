@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Buku, Siswa, Peminjaman 
 
-# Register your models here.
+
+admin.site.register(Buku)
+admin.site.register(Siswa)
+admin.site.register(Peminjaman)

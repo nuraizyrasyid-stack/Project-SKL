@@ -50,16 +50,36 @@
       <tbody class="divide-y divide-slate-100/70 text-xs text-slate-900 font-bold">
         {% for pinjam in list_peminjaman %}
         <tr class="hover:bg-slate-50/50 transition">
-          <td class="px-6 py-4 text-slate-400 font-extrabold">{{ pinjam.id }}</td>
-          <td class="px-6 py-4 text-slate-900 font-extrabold">{{ pinjam.nama_siswa }}</td>
-          <td class="px-6 py-4 text-slate-800">{{ pinjam.judul_buku }}</td>
-          <td class="px-6 py-4 text-slate-800">{{ pinjam.tanggal_pinjam }}</td>
-          <td class="px-6 py-4 text-slate-800">{{ pinjam.tanggal_kembali }}</td>
-          <td class="px-6 py-4 text-slate-800 max-w-[200px] break-words">{{ pinjam.keperluan }}</td>
-          <td class="px-6 py-4 text-slate-900">{{ pinjam.nama_petugas }}</td>
+          <td class="px-6 py-4 text-slate-400 font-extrabold">
+            {{ pinjam.id|default:pinjam.0 }}
+          </td>
+
+          <td class="px-6 py-4 text-slate-900 font-extrabold">
+            {{ pinjam.nama_siswa|default:pinjam.1 }}
+          </td>
+
+          <td class="px-6 py-4 text-slate-800">
+            {{ pinjam.judul_buku|default:pinjam.2 }}
+          </td>
+
+          <td class="px-6 py-4 text-slate-800">
+            {{ pinjam.tanggal_pinjam|default:pinjam.3 }}
+          </td>
+
+          <td class="px-6 py-4 text-slate-800">
+            {{ pinjam.tanggal_kembali|default:pinjam.4 }}
+          </td>
+
+          <td class="px-6 py-4 text-slate-800 max-w-[200px] break-words">
+            {{ pinjam.keperluan|default:pinjam.5 }}
+          </td>
+
+          <td class="px-6 py-4 text-slate-900">
+            {{ pinjam.nama_petugas|default:pinjam.6 }}
+          </td>
 
           <td class="px-6 py-4">
-            {% if pinjam.status_kembali %}
+            {% if pinjam.status_kembali or pinjam.7 == 1 or pinjam.7 == True %}
             <span
               class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-emerald-50 text-emerald-600 border border-emerald-100">
               Selesai
@@ -73,8 +93,8 @@
           </td>
 
           <td class="px-6 py-4 text-center">
-            {% if not pinjam.status_kembali %}
-            <a href="{% url 'peminjaman_kembalikan' pinjam.id %}"
+            {% if not pinjam.status_kembali and pinjam.7 != 1 and pinjam.7 != True %}
+            <a href="{% url 'peminjaman_kembalikan' pinjam.id|default:pinjam.0 %}"
               class="inline-flex items-center justify-center bg-[#059669] hover:bg-emerald-700 text-white text-[11px] font-extrabold px-3 py-1.5 rounded-lg transition shadow-sm">
               Kembalikan
             </a>

@@ -15,26 +15,26 @@ def dict_fetchone(cursor):
 
 def index(request):
     with connection.cursor() as cursor:
-        
+
         cursor.execute("SELECT COALESCE(SUM(stok), 0) FROM buku")
         total_buku = cursor.fetchone()[0]
-        
-      
+
+
         cursor.execute("SELECT COUNT(*) FROM buku")
         total_judul = cursor.fetchone()[0]
-        
-       
+
+
         cursor.execute("SELECT COUNT(*) FROM peminjaman WHERE status = 'Dipinjam'")
         sedang_dipinjam = cursor.fetchone()[0]
-        
-     
+
+
         cursor.execute("SELECT COUNT(*) FROM peminjaman WHERE status = 'Selesai'")
         sudah_dikembalikan = cursor.fetchone()[0]
-        
-       
+
+
         cursor.execute("SELECT judul, stok FROM buku ORDER BY stok DESC LIMIT 6")
         buku_stok = dict_fetchall(cursor)
-        
+
         distribusi_stok = []
         for b in buku_stok:
             persentase = (b['stok'] / total_buku) * 100 if total_buku > 0 else 0
@@ -44,7 +44,7 @@ def index(request):
                 'persentase': round(persentase)
             })
 
-   
+
     return render(request, 'index.html', {
         'total_buku': total_buku,
         'total_judul': total_judul,
@@ -56,12 +56,12 @@ def index(request):
 def buku_list(request):
     with connection.cursor() as cursor:
         cursor.execute("""
-            SELECT id, judul, pengarang, kategori, penerbit, tahun_terbit, rak, stok 
+            SELECT id, judul, pengarang, kategori, penerbit, tahun_terbit, rak, stok
             FROM buku ORDER BY id DESC
         """)
-        
-        list_buku = dict_fetchall(cursor) 
-    
+
+        list_buku = dict_fetchall(cursor)
+
     return render(request, 'buku/buku_list.html', {'list_buku': list_buku})
 def buku_tambah(request):
     if request.method == 'POST':
@@ -74,16 +74,16 @@ def buku_tambah(request):
         stok = request.POST.get('stok')
         deskripsi = request.POST.get('deskripsi')
         isbn = request.POST.get('isbn')
-        
+
         with connection.cursor() as cursor:
-           
+
             cursor.execute("""
                 INSERT INTO buku (judul, pengarang, kategori, penerbit, tahun_terbit, rak, stok, deskripsi, isbn)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, [judul, pengarang, kategori, penerbit, tahun, rak, stok, deskripsi, isbn])
-            
+
         return redirect('buku_list')
-        
+
     return render(request, 'buku/buku_tambah.html')
 
 from django.http import Http404
@@ -91,16 +91,16 @@ from django.http import Http404
 def buku_detail(request, buku_id):
     with connection.cursor() as cursor:
         cursor.execute("""
-            SELECT id, judul, pengarang, kategori, penerbit, tahun_terbit, isbn, rak, stok, deskripsi 
+            SELECT id, judul, pengarang, kategori, penerbit, tahun_terbit, isbn, rak, stok, deskripsi
             FROM buku WHERE id = %s
         """, [buku_id])
-        
+
         data = dict_fetchall(cursor)
         if not data:
             raise Http404("Buku tidak ditemukan.")
-        
+
         buku = data[0]
-        
+
     return render(request, 'buku/buku_detail.html', {'buku': buku})
 
 def buku_edit(request, pk):
@@ -117,7 +117,7 @@ def buku_edit(request, pk):
 
         with connection.cursor() as cursor:
             cursor.execute("""
-                UPDATE buku SET 
+                UPDATE buku SET
                     judul = %s, pengarang = %s, kategori = %s, penerbit = %s,
                     tahun_terbit = %s, rak = %s, stok = %s, deskripsi = %s,  isbn = %s
                 WHERE id = %s
@@ -128,7 +128,13 @@ def buku_edit(request, pk):
         buku = dict_fetchone(cursor)
     if not buku:
         return redirect('buku_list')
-    pilihan_kategori = ['Novel', 'Sejarah', 'Pendidikan']
+    pilihan_kategori = [
+    'Novel', 'Sejarah', 'Pendidikan', 'Sastra & Puisi', 'Bahasa & Kamus',
+    'Buku IT Komputer', 'Rekayasa Perangkat Lunak', 'Teori Informatika',
+    'Pemrograman Web', 'Basis Data (Database)', 'Jaringan Komputer',
+    'Matematika', 'Sains & IPA', 'Ilmu Pengetahuan Sosial', 'Buku Paket Pelajaran',
+    'Agama Islam', 'Pengembangan Diri', 'Komik & Manga', 'Biografi', 'Ensiklopedia'
+    ]
     pilihan_rak = ['Rak A-01', 'Rak A-02', 'Rak A-03', 'Rak A-04', 'Rak A-05']
     return render(request, 'buku/buku_edit.html', {
         'buku': buku,
@@ -162,7 +168,7 @@ def siswa_tambah(request):
         is_active = request.POST.get('is_active') == 'True'
         with connection.cursor() as cursor:
             cursor.execute("""
-                INSERT INTO siswa (nama, kelas, nis, is_active) 
+                INSERT INTO siswa (nama, kelas, nis, is_active)
                 VALUES (%s, %s, %s, %s)
             """, [nama, kelas, nis, is_active])
         return redirect('siswa_list')
@@ -184,8 +190,8 @@ def siswa_edit(request, pk):
         is_active = request.POST.get('is_active') == 'True'
         with connection.cursor() as cursor:
             cursor.execute("""
-                UPDATE siswa 
-                SET nama = %s, kelas = %s, nis = %s, is_active = %s 
+                UPDATE siswa
+                SET nama = %s, kelas = %s, nis = %s, is_active = %s
                 WHERE id = %s
             """, [nama, kelas, nis, is_active, pk])
         return redirect('siswa_list')
@@ -211,7 +217,7 @@ def siswa_hapus(request, pk):
 def peminjaman_list(request):
     with connection.cursor() as cursor:
         cursor.execute("""
-            SELECT 
+            SELECT
                 p.id,
                 s.nama AS nama_siswa,
                 b.judul AS judul_buku,
@@ -219,9 +225,9 @@ def peminjaman_list(request):
                 p.jatuh_tempo AS tanggal_kembali,
                 p.keperluan,
                 'Budi Siregar' AS nama_petugas,
-                CASE 
-                    WHEN p.status = 'Selesai' THEN TRUE 
-                    ELSE FALSE 
+                CASE
+                    WHEN p.status = 'Selesai' THEN TRUE
+                    ELSE FALSE
                 END AS status_kembali
             FROM peminjaman p
             LEFT JOIN siswa s ON CAST(p.siswa_id AS VARCHAR) = CAST(s.id AS VARCHAR)
@@ -229,7 +235,7 @@ def peminjaman_list(request):
             ORDER BY p.id DESC
         """)
         hasil_query = dict_fetchall(cursor)
-        
+
     return render(request, 'peminjaman/pinjam_list.html', {
         'list_peminjaman': hasil_query,
         'daftar_pinjam': hasil_query
@@ -242,36 +248,36 @@ def peminjaman_tambah(request):
         jatuh_tempo = request.POST.get('tanggal_kembali')
         keperluan = request.POST.get('keperluan')
         status = 'Dipinjam'
-        
+
         if siswa_id and buku_id:
             siswa_id = int(siswa_id)
             buku_id = int(buku_id)
-            
+
             with connection.cursor() as cursor:
                 cursor.execute("""
                     INSERT INTO peminjaman (siswa_id, buku_id, tanggal_pinjam, jatuh_tempo, keperluan, status)
                     VALUES (%s, %s, %s, %s, %s, %s)
                 """, [siswa_id, buku_id, tanggal_pinjam, jatuh_tempo, keperluan, status])
-                
+
                 cursor.execute("""
-                    UPDATE buku 
-                    SET stok = stok - 1 
+                    UPDATE buku
+                    SET stok = stok - 1
                     WHERE id = %s
                 """, [buku_id])
-                
+
             return redirect('peminjaman_list')
 
     with connection.cursor() as cursor:
         cursor.execute("SELECT id, nama, kelas, nis FROM siswa WHERE is_active = True ORDER BY nama ASC")
         daftar_siswa = dict_fetchall(cursor)
-        
+
         cursor.execute("SELECT id, judul, stok FROM buku WHERE stok > 0 ORDER BY judul ASC")
         daftar_buku = dict_fetchall(cursor)
-        
+
     tanggal_hari_ini = datetime.now().date()
     tanggal_kembali = tanggal_hari_ini + timedelta(days=7)
-    
-    
+
+
     return render(request, 'peminjaman/pinjam_tambah.html', {
         'daftar_siswa': daftar_siswa,
         'daftar_buku': daftar_buku,
@@ -282,9 +288,9 @@ def peminjaman_kembalikan(request, pk):
     with connection.cursor() as cursor:
         cursor.execute("SELECT buku_id, status FROM peminjaman WHERE id = %s", [pk])
         peminjaman = dict_fetchone(cursor)
-        
+
         if peminjaman and peminjaman['status'] == 'Dipinjam':
             cursor.execute("UPDATE peminjaman SET status = 'Selesai' WHERE id = %s", [pk])
             cursor.execute("UPDATE buku SET stok = stok + 1 WHERE id = %s", [peminjaman['buku_id']])
-            
+
     return redirect('peminjaman_list')

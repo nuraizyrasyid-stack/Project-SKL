@@ -1,7 +1,7 @@
 from django.db import models
 
 class Buku(models.Model):
-    
+
     judul = models.CharField(max_length=255)
     pengarang = models.CharField(max_length=255)
     kategori = models.CharField(max_length=100)
@@ -11,8 +11,10 @@ class Buku(models.Model):
     stok = models.IntegerField()
     deskripsi = models.TextField()
 
+    isbn = models.CharField(max_length=50, default='-', blank=True, null=True)
+
     class Meta:
-        db_table = 'buku'  
+        db_table = 'buku'
     def __str__(self):
         return self.judul
 
@@ -23,6 +25,8 @@ class Siswa(models.Model):
     nis = models.CharField(max_length=100, unique=True)
     is_active = models.BooleanField(default=True)
 
+
+
     class Meta:
         db_table = 'siswa'
 
@@ -31,7 +35,7 @@ class Siswa(models.Model):
 
 
 class Peminjaman(models.Model):
-   
+
     siswa = models.ForeignKey(Siswa, on_delete=models.CASCADE, db_column='siswa_id')
     buku = models.ForeignKey(Buku, on_delete=models.CASCADE, db_column='buku_id')
     tanggal_pinjam = models.DateField()

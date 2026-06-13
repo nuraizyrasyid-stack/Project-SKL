@@ -4,32 +4,35 @@
 
 {% block content %}
 
-<div class="flex items-center gap-3 mb-5">
-  <a href="{% url 'peminjaman_list' %}" class="w-8 h-8 bg-white rounded-full border border-slate-200 shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50 transition">
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-    </svg>
-  </a>
-  <div>
-    <p class="text-[11px] text-slate-400 font-bold tracking-wider">Peminjaman Buku</p>
-    <h3 class="text-xl font-bold text-slate-900 leading-tight mt-0.5">Pinjam Buku</h3>
-  </div>
+<!-- Header -->
+<div class="flex items-center gap-3 mb-6">
+    <a href="{% url 'peminjaman_list' %}"
+        class="w-9 h-9 bg-white rounded-full border border-slate-200 shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+    </a>
+    <div>
+        <p class="text-[11px] text-slate-400 font-bold tracking-wider">Peminjaman Buku</p>
+        <h1 class="text-2xl font-bold text-slate-900 leading-tight">Pinjam Buku</h1>
+    </div>
 </div>
 
-<div class="w-full max-w-[720px] bg-white rounded-2xl px-6 pt-5 pb-4 border border-slate-100 shadow-[0_4px_25px_rgb(0,0,0,0.01)]">
+<!-- Form Card -->
+<div class="w-full max-w-[720px] bg-white rounded-2xl border border-slate-100 shadow-[0_4px_25px_rgb(0,0,0,0.01)] p-6">
 
-    <form method="POST" action="{% url 'peminjaman_tambah' %}" class="space-y-3.5">
+    <form method="POST" action="{% url 'peminjaman_tambah' %}" class="space-y-5">
         {% csrf_token %}
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-3.5">
+        <!-- Grid Input -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-5">
 
-            <div class="space-y-1">
-                <label class="text-[11px] font-bold text-slate-500 tracking-wide block">
-                    Nama Peminjam
-                </label>
+            <!-- Nama Peminjam -->
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold text-slate-500 tracking-wide">Nama Peminjam</label>
                 <div class="relative">
                     <select name="siswa_id" id="siswa_id" required
-                        class="w-full h-10 rounded-xl border border-slate-200 px-4 text-xs text-slate-800 font-bold bg-white appearance-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none transition cursor-pointer">
+                        class="w-full h-11 rounded-xl border border-slate-200 px-5 text-sm text-slate-800 font-bold bg-white appearance-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none transition cursor-pointer">
                         <option value="" selected disabled hidden>Pilih Siswa</option>
                         {% for siswa in daftar_siswa %}
                         <option value="{{ siswa.id }}">
@@ -38,20 +41,19 @@
                         {% endfor %}
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                         </svg>
                     </div>
                 </div>
             </div>
 
-            <div class="space-y-1">
-                <label class="text-[11px] font-bold text-slate-500 tracking-wide block">
-                    Pilih Buku
-                </label>
+            <!-- Pilih Buku -->
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold text-slate-500 tracking-wide">Pilih Buku</label>
                 <div class="relative">
                     <select name="buku_id" id="buku_id" required
-                        class="w-full h-10 rounded-xl border border-slate-200 px-4 text-xs text-slate-800 font-bold bg-white appearance-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none transition cursor-pointer">
+                        class="w-full h-11 rounded-xl border border-slate-200 px-5 text-sm text-slate-800 font-bold bg-white appearance-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none transition cursor-pointer">
                         <option value="" selected disabled hidden>Pilih Buku</option>
                         {% for buku in daftar_buku %}
                         <option value="{{ buku.id }}">
@@ -60,73 +62,69 @@
                         {% endfor %}
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                         </svg>
                     </div>
                 </div>
             </div>
 
-            <div class="space-y-1">
-                <label class="text-[11px] font-bold text-slate-500 tracking-wide block">
-                    Tanggal Pinjam
-                </label>
+            <!-- Tanggal Pinjam -->
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold text-slate-500 tracking-wide">Tanggal Pinjam</label>
                 <input type="date" name="tanggal_pinjam" id="tanggal_pinjam" value="{{ hari_ini }}" required
-                    class="w-full h-10 rounded-xl border border-slate-200 px-4 text-xs text-slate-800 font-bold bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none transition">
+                    class="w-full h-11 rounded-xl border border-slate-200 px-5 text-sm text-slate-800 font-bold bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none transition">
             </div>
 
-            <div class="space-y-1">
-                <label class="text-[11px] font-bold text-slate-500 tracking-wide block">
-                    Tanggal Jatuh Tempo
-                </label>
+            <!-- Tanggal Jatuh Tempo -->
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold text-slate-500 tracking-wide">Tanggal Jatuh Tempo</label>
                 <input type="date" name="tanggal_kembali" id="tanggal_kembali" value="{{ kembali }}" required
-                    class="w-full h-10 rounded-xl border border-slate-200 px-4 text-xs text-slate-800 font-bold bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none transition">
+                    class="w-full h-11 rounded-xl border border-slate-200 px-5 text-sm text-slate-800 font-bold bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none transition">
             </div>
 
-            <div class="space-y-1">
-                <label class="text-[11px] font-bold text-slate-500 tracking-wide block">
-                    Keperluan
-                </label>
+            <!-- Keperluan -->
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold text-slate-500 tracking-wide">Keperluan</label>
                 <div class="relative">
                     <select name="keperluan" required
-                        class="w-full h-10 rounded-xl border border-slate-200 px-4 text-xs text-slate-800 font-bold bg-white appearance-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none transition cursor-pointer">
+                        class="w-full h-11 rounded-xl border border-slate-200 px-5 text-sm text-slate-800 font-bold bg-white appearance-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none transition cursor-pointer">
                         <option value="Bacaan pribadi">Bacaan pribadi</option>
                         <option value="Tugas sekolah">Tugas sekolah</option>
                         <option value="Referensi kelompok">Referensi kelompok</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                         </svg>
                     </div>
                 </div>
             </div>
 
-            <div class="space-y-1">
-                <label class="text-[11px] font-bold text-slate-500 tracking-wide block">
-                    Petugas
-                </label>
+            <!-- Petugas -->
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold text-slate-500 tracking-wide">Petugas</label>
                 <input type="text" value="Budi Siregar" disabled
-                    class="w-full h-10 rounded-xl border border-slate-100 bg-slate-50/70 px-4 text-xs text-slate-800 font-bold cursor-not-allowed outline-none">
+                    class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50 px-5 text-sm text-slate-700 font-bold cursor-not-allowed outline-none">
             </div>
 
         </div>
 
-        <div class="space-y-1">
-            <label for="catatan" class="text-[11px] font-bold text-slate-500 tracking-wide block">
-                Catatan
-            </label>
-            <textarea name="catatan" id="catatan" rows="2.5" placeholder="Contoh: buku untuk tugas Bahasa Indonesia"
-                class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-xs text-slate-800 font-bold bg-white placeholder-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none transition resize-none"></textarea>
+        <!-- Catatan -->
+        <div class="space-y-1.5">
+            <label for="catatan" class="text-xs font-bold text-slate-500 tracking-wide">Catatan</label>
+            <textarea name="catatan" id="catatan" rows="3" placeholder="Contoh: Buku untuk tugas Bahasa Indonesia"
+                class="w-full rounded-xl border border-slate-200 px-5 py-3 text-sm text-slate-800 font-bold bg-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none transition resize-y"></textarea>
         </div>
 
-        <div class="flex justify-end gap-2.5 pt-1">
+        <!-- Tombol Aksi -->
+        <div class="flex justify-end gap-3 pt-2">
             <a href="{% url 'peminjaman_list' %}"
-                class="px-4 py-2 border border-slate-200 text-slate-500 hover:bg-slate-50 rounded-xl text-xs font-bold transition flex items-center justify-center">
+                class="px-5 py-2.5 border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-xl text-sm font-bold transition flex items-center justify-center">
                 Batal
             </a>
             <button type="submit"
-                class="px-4 py-2 bg-[#2563eb] hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-md shadow-blue-500/10 transition">
+                class="px-5 py-2.5 bg-[#2563eb] hover:bg-blue-700 text-white rounded-xl text-sm font-bold shadow-md shadow-blue-500/10 transition">
                 Pinjam Buku
             </button>
         </div>
