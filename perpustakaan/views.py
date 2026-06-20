@@ -69,14 +69,19 @@ def buku_tambah(request):
         pengarang = request.POST.get('pengarang')
         kategori = request.POST.get('kategori')
         penerbit = request.POST.get('penerbit')
-        tahun = request.POST.get('tahun_terbit')
+        
+        tahun = request.POST.get('tahun')
+        tahun = int(tahun) if tahun else None
+        
         rak = request.POST.get('rak')
+        
         stok = request.POST.get('stok')
+        stok = int(stok) if stok else 0
+        
         deskripsi = request.POST.get('deskripsi')
         isbn = request.POST.get('isbn')
 
         with connection.cursor() as cursor:
-
             cursor.execute("""
                 INSERT INTO buku (judul, pengarang, kategori, penerbit, tahun_terbit, rak, stok, deskripsi, isbn)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)

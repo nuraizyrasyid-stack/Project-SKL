@@ -1,119 +1,114 @@
 {% extends 'base.html' %}
 
 {% block title %}Peminjaman Buku - SIPUSTAKA{% endblock %}
+{% block sidebar_title %}Peminjaman{% endblock %}
 
 {% block content %}
-<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-  <div>
-    <p class="text-[11px] text-slate-400 font-bold tracking-wider">Catat peminjaman dan pengembalian buku.</p>
-    <h3 class="text-xl font-bold text-slate-900 leading-tight mt-0.5">Peminjaman</h3>
+
+<div class="w-full max-w-[1400px] ml-1 md:ml-2">
+
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+    <div>
+      <p class="text-xs font-semibold tracking-wider text-slate-400">CATAT PEMINJAMAN & PENGEMBALIAN</p>
+      <h1 class="text-3xl font-bold text-slate-900 mt-1">Peminjaman</h1>
+    </div>
+
+    <a href="{% url 'peminjaman_tambah' %}"
+      class="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-2xl shadow-md shadow-blue-500/20 transition">
+      <i data-lucide="book-plus" class="w-4 h-4"></i>
+      <span>Pinjam Buku</span>
+    </a>
   </div>
 
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Table -->
+  <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[1100px]">
 
-  <a href="{% url 'peminjaman_tambah' %}" class="inline-flex items-center gap-2 self-start
-          bg-[#2563eb] hover:bg-[#1d4ed8]
-          text-white text-sm font-medium
-          px-5 py-2.5
-          rounded-full
-          shadow-md shadow-blue-500/20
-          transition-all duration-200">
+        <thead>
+          <tr class="bg-slate-50 text-xs font-semibold text-slate-500">
+            <th class="px-6 py-4 text-left w-16">ID</th>
+            <th class="px-6 py-4 text-left">Nama Peminjam</th>
+            <th class="px-6 py-4 text-left">Buku</th>
+            <th class="px-6 py-4 text-left">Tanggal Pinjam</th>
+            <th class="px-6 py-4 text-left">Jatuh Tempo</th>
+            <th class="px-6 py-4 text-left">Keperluan</th>
+            <th class="px-6 py-4 text-left">Petugas</th>
+            <th class="px-6 py-4 text-center">Status</th>
+            <th class="px-6 py-4 text-center w-36">Aksi</th>
+          </tr>
+        </thead>
 
-    <i data-lucide="book-plus" class="w-5 h-5"></i>
+        <tbody class="divide-y divide-slate-100 text-sm">
+          {% for pinjam in list_peminjaman %}
+          <tr class="hover:bg-slate-50 transition-colors">
 
-    <span>Pinjam Buku</span>
-  </a>
+            <td class="px-6 py-4 text-slate-500 font-medium">{{ pinjam.id }}</td>
 
-  <script>
-    lucide.createIcons();
-  </script>
-</div>
+            <td class="px-6 py-4">
+              <span class="font-semibold text-slate-900">{{ pinjam.nama_siswa }}</span>
+            </td>
 
-<div class="bg-white rounded-2xl border border-slate-100 shadow-[0_4px_30px_rgb(0,0,0,0.015)] overflow-hidden">
-  <div class="overflow-x-auto">
-    <table class="w-full text-left border-collapse min-w-[1000px]">
-      <thead>
-        <tr
-          class="border-b border-slate-100 text-[10px] font-bold text-slate-500 uppercase tracking-wider bg-slate-50/50">
-          <th class="px-6 py-4 w-16">ID</th>
-          <th class="px-6 py-4">Nama Peminjam</th>
-          <th class="px-6 py-4">Buku</th>
-          <th class="px-6 py-4">Tanggal Pinjam</th>
-          <th class="px-6 py-4">Jatuh Tempo</th>
-          <th class="px-6 py-4">Keperluan</th>
-          <th class="px-6 py-4">Petugas</th>
-          <th class="px-6 py-4">Status</th>
-          <th class="px-6 py-4 text-center w-32">Aksi</th>
-        </tr>
-      </thead>
+            <td class="px-6 py-4 text-slate-700">{{ pinjam.judul_buku }}</td>
 
-      <tbody class="divide-y divide-slate-100/70 text-xs text-slate-900 font-bold">
-        {% for pinjam in list_peminjaman %}
-        <tr class="hover:bg-slate-50/50 transition">
-          <td class="px-6 py-4 text-slate-400 font-extrabold">
-            {{ pinjam.id }}
-          </td>
+            <td class="px-6 py-4 text-slate-700">{{ pinjam.tanggal_pinjam }}</td>
 
-          <td class="px-6 py-4 text-slate-900 font-extrabold">
-            {{ pinjam.nama_siswa }}
-          </td>
+            <td class="px-6 py-4 text-slate-700">{{ pinjam.tanggal_kembali }}</td>
 
-          <td class="px-6 py-4 text-slate-800">
-            {{ pinjam.judul_buku }}
-          </td>
+            <td class="px-6 py-4 text-slate-700 max-w-[220px] truncate">
+              {{ pinjam.keperluan }}
+            </td>
 
-          <td class="px-6 py-4 text-slate-800">
-            {{ pinjam.tanggal_pinjam }}
-          </td>
+            <td class="px-6 py-4 text-slate-700">{{ pinjam.nama_petugas }}</td>
 
-          <td class="px-6 py-4 text-slate-800">
-            {{ pinjam.tanggal_kembali }}
-          </td>
+            <!-- Status -->
+            <td class="px-6 py-4 text-center">
+              {% if pinjam.status_kembali == 1 or pinjam.status_kembali == 'Selesai' %}
+              <span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-700">
+                Selesai
+              </span>
+              {% else %}
+              <span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-amber-100 text-amber-700">
+                Dipinjam
+              </span>
+              {% endif %}
+            </td>
 
-          <td class="px-6 py-4 text-slate-800 max-w-[200px] break-words">
-            {{ pinjam.keperluan }}
-          </td>
+            <!-- Aksi -->
+            <td class="px-6 py-4 text-center">
+              {% if pinjam.status_kembali == 0 or pinjam.status_kembali == 'Dipinjam' %}
+              <a href="{% url 'peminjaman_kembalikan' pinjam.id %}"
+                class="inline-flex items-center justify-center px-4 py-1.5 text-xs font-semibold rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition">
+                Kembalikan
+              </a>
+              {% else %}
+              <span class="text-xs text-slate-400 font-medium italic">Selesai</span>
+              {% endif %}
+            </td>
 
-          <td class="px-6 py-4 text-slate-900">
-            {{ pinjam.nama_petugas }}
-          </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="9" class="px-6 py-16 text-center">
+              <div class="flex flex-col items-center text-slate-400">
+                <i data-lucide="book-x" class="w-10 h-10 mb-3"></i>
+                <p class="font-medium">Belum ada data peminjaman</p>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
 
-          <td class="px-6 py-4">
-            {# Perbaikan Logika Status: mengecek jika statusnya bernilai 1 atau teks Selesai #}
-            {% if pinjam.status_kembali == 1 or pinjam.status_kembali == 'Selesai' %}
-            <span
-              class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-emerald-50 text-emerald-600 border border-emerald-100">
-              Selesai
-            </span>
-            {% else %}
-            <span
-              class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-amber-50 text-amber-600 border border-amber-100/70">
-              Dipinjam
-            </span>
-            {% endif %}
-          </td>
-
-          <td class="px-6 py-4 text-center">
-            {# Perbaikan Logika Tombol Aksi: jika bernilai 0 atau teks Dipinjam #}
-            {% if pinjam.status_kembali == 0 or pinjam.status_kembali == 'Dipinjam' %}
-            <a href="{% url 'peminjaman_kembalikan' pinjam.id %}"
-              class="inline-flex items-center justify-center bg-[#059669] hover:bg-emerald-700 text-white text-[11px] font-extrabold px-3 py-1.5 rounded-lg transition shadow-sm">
-              Kembalikan
-            </a>
-            {% else %}
-            <span class="text-slate-400 text-[11px] font-extrabold italic">Selesai</span>
-            {% endif %}
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="9" class="px-6 py-12 text-center text-slate-800 font-bold text-sm tracking-wide">
-            Belum ada data catatan transaksi peminjaman buku.
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+      </table>
+    </div>
   </div>
+
 </div>
-{% endblock %}
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+</script>
+
+{% endblock %}  

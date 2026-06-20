@@ -40,15 +40,6 @@
         body {
             font-family: Inter, sans-serif;
         }
-
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
     </style>
 </head>
 
@@ -56,78 +47,71 @@
 
     <div class="min-h-screen flex flex-col md:flex-row">
 
-        
+        <!-- Sidebar -->
         <aside class="w-full md:w-52 bg-[#090d16] text-slate-100 flex flex-col">
 
-           
-            <div>
-                <div class="px-4 py-5 border-b border-slate-900">
-                    <div class="flex items-center gap-2">
-                        <div
-                            class="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-500 to-sky-400 flex items-center justify-center shadow-lg shadow-brand-500/20">
-                            <span class="text-sm font-bold text-white">P</span>
-                        </div>
-
-                        <div>
-                            <p class="text-[8px] font-bold text-slate-500 uppercase tracking-[0.1em] leading-none">
-                                SIPUSTAKA
-                            </p>
-
-                            <h1 class="text-[11px] font-bold text-white mt-0.5 leading-tight">
-                                Sistem Buku
-                            </h1>
-                        </div>
+            <!-- Logo + Dynamic Title -->
+            <div class="px-4 py-5 border-b border-slate-900">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-9 h-9 rounded-2xl bg-gradient-to-br from-brand-500 to-sky-400 flex items-center justify-center shadow-lg shadow-brand-500/30">
+                        <span class="text-base font-bold text-white">P</span>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-500 uppercase tracking-[1px]">SIPUSTAKA</p>
+                        <h1 class="text-sm font-bold text-white leading-tight mt-0.5">
+                            {% block sidebar_title %}Sistem Buku{% endblock %}
+                        </h1>
                     </div>
                 </div>
-
-                <nav class="px-2.5 py-5 space-y-1">
-
-                    <a href="{% url 'index' %}"
-                        class="w-full rounded-xl px-3.5 py-2.5 flex items-center gap-2.5 transition text-[12px] font-semibold {% if request.path == '/' %}text-white bg-[#131926]{% else %}text-slate-400 hover:text-white hover:bg-[#131926]/50{% endif %}">
-                        <span class="material-icons-outlined text-base">grid_view</span>
-                        Dashboard
-                    </a>
-
-                    <a href="{% url 'buku_list' %}"
-                        class="w-full rounded-xl px-3.5 py-2.5 flex items-center gap-2.5 transition text-[12px] font-semibold {% if '/buku/' in request.path %}text-white bg-[#131926]{% else %}text-slate-400 hover:text-white hover:bg-[#131926]/50{% endif %}">
-                        <span class="material-icons-outlined text-base">menu_book</span>
-                        Buku
-                    </a>
-
-                    <a href="{% url 'peminjaman_list' %}"
-                        class="w-full rounded-xl px-3.5 py-2.5 flex items-center gap-2.5 transition text-[12px] font-semibold {% if '/peminjaman/' in request.path %}text-white bg-[#131926]{% else %}text-slate-400 hover:text-white hover:bg-[#131926]/50{% endif %}">
-                        <span class="material-icons-outlined text-base">assignment</span>
-                        Peminjaman
-                    </a>
-
-                    <a href="{% url 'siswa_list' %}"
-                        class="w-full rounded-xl px-3.5 py-2.5 flex items-center gap-2.5 transition text-[12px] font-semibold {% if '/siswa/' in request.path %}text-white bg-[#131926]{% else %}text-slate-400 hover:text-white hover:bg-[#131926]/50{% endif %}">
-                        <span class="material-icons-outlined text-base">people_alt</span>
-                        User
-                    </a>
-
-                </nav>
             </div>
 
-          
-            <div class="mt-auto px-3.5 pb-5">
-                <div class="rounded-xl bg-[#131926] p-2.5 border border-slate-900">
-                    <p class="text-[8px] font-bold text-slate-500 uppercase tracking-wider">
-                        Admin Aktif
-                    </p>
+            <!-- Navigation -->
+            <nav class="px-2.5 py-4 space-y-1 flex-1">
 
-                    <p class="mt-0.5 text-[11px] font-bold text-white tracking-wide leading-tight">
-                        Budi Siregar
-                    </p>
+                <a href="{% url 'index' %}"
+                    class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition
+                          {% if request.path == '/' %}bg-[#131926] text-white{% else %}text-slate-400 hover:bg-[#131926]/60 hover:text-white{% endif %}">
+                    <span class="material-icons-outlined text-[19px]">grid_view</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="{% url 'buku_list' %}"
+                    class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition
+                          {% if '/buku/' in request.path %}bg-[#131926] text-white{% else %}text-slate-400 hover:bg-[#131926]/60 hover:text-white{% endif %}">
+                    <span class="material-icons-outlined text-[19px]">menu_book</span>
+                    <span>Buku</span>
+                </a>
+
+                <a href="{% url 'peminjaman_list' %}"
+                    class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition
+                          {% if '/peminjaman/' in request.path %}bg-[#131926] text-white{% else %}text-slate-400 hover:bg-[#131926]/60 hover:text-white{% endif %}">
+                    <span class="material-icons-outlined text-[19px]">assignment</span>
+                    <span>Peminjaman</span>
+                </a>
+
+                <a href="{% url 'siswa_list' %}"
+                    class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition
+                          {% if '/siswa/' in request.path %}bg-[#131926] text-white{% else %}text-slate-400 hover:bg-[#131926]/60 hover:text-white{% endif %}">
+                    <span class="material-icons-outlined text-[19px]">people_alt</span>
+                    <span>User</span>
+                </a>
+
+            </nav>
+
+            <!-- Admin Info -->
+            <div class="px-3.5 pb-5">
+                <div class="rounded-2xl bg-[#131926] p-3 border border-slate-800">
+                    <p class="text-[9px] font-bold text-slate-500 tracking-wider">ADMIN AKTIF</p>
+                    <p class="text-sm font-semibold text-white mt-0.5">Budi Siregar</p>
                 </div>
             </div>
 
         </aside>
 
-       
-        <main class="flex-1 p-7">
-            {% block content %}
-            {% endblock %}
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-7">
+            {% block content %}{% endblock %}
         </main>
 
     </div>
